@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2013-2017 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -37,45 +37,51 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package org.glassfish.jersey.examples.helloworld.spring;
+package org.glassfish.jersey.examples.helloworld.webapp;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.io.IOException;
+import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
+import org.glassfish.jersey.grizzly2.servlet.GrizzlyWebContainerFactory;
+import org.glassfish.jersey.server.ServerProperties;
+import org.glassfish.jersey.servlet.ServletContainer;
 
-import javax.inject.Singleton;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.glassfish.grizzly.http.server.HttpServer;
 
 /**
- * Jersey Spring integration example.
- * Demonstrate how to use Spring managed JAX-RS resource class with singleton scope (+ Spring bean DI).
- *
- * @author Marko Asplund (marko.asplund at gmail.com)
+ * @author Pavel Bucek (pavel.bucek at oracle.com)
  */
-@Path("spring-singleton-hello")
-@Component
-@Singleton
-public class SpringSingletonResource {
+public class App {
 
-    private final AtomicInteger counter = new AtomicInteger();
+    private static final URI BASE_URI = URI.create("http://localhost:8080/helloworld-webapp/");
+    public static final String ROOT_PATH = "helloworld";
 
-    @Autowired
-    private GreetingService greetingService;
+    public static void main(String[] args) {
+        try {
+            System.out.println("\"Hello World\" Jersey Example App");
 
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getHello(@Context HttpHeaders headers, @QueryParam("p1") String p1) {
-        if ("foobar".equals(p1)) {
-            throw new IllegalArgumentException("foobar is illegal");
+            Map<String, String> initParams = new HashMap<>();
+            initParams.put(
+                    ServerProperties.PROVIDER_PACKAGES,
+                    HelloWorldResource.class.getPackage().getName());
+            final HttpServer server = GrizzlyWebContainerFactory.create(BASE_URI, ServletContainer.class, initParams);
+            Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    server.shutdownNow();
+                }
+            }));
+
+            System.out.println(String.format("Application started.%nTry out %s%s%nStop the application using CTRL+C",
+                    BASE_URI, ROOT_PATH));
+
+            Thread.currentThread().join();
+        } catch (IOException | InterruptedException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return String.format("%d: %s", counter.incrementAndGet(), greetingService.greet("world"));
     }
 }

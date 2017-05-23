@@ -41,38 +41,33 @@
 
 -->
 
-Jersey Spring Integration Spring Helloworld WebApp Example
-==========================================================
+Helloworld webapp Example
+=========================
 
-This example demonstrates how to create simple Jersey application that
-utilises Spring 3 DI features, packaged into WAR file.
+This example demonstrates how to create simple Jersey application,
+package it into WAR file and how to run it using [Grizzly
+container](http://grizzly.java.net).
 
 Contents
 --------
 
 The mapping of the URI path space is presented in the following table:
 
-URI path                        | Resource class            | HTTP methods
-------------------------------- | ------------------------- | --------------
-**_/jersey-hello_**             | JerseyResource            | GET
-**_/spring-hello_**             | SpringRequestResource     | GET
-**_/spring-singleton-hello_**   | SpringSingletonResource   | GET
+URI path            | Resource class       | HTTP methods
+------------------- | -------------------- | --------------
+**_/helloworld_**   | HelloWorldResource   | GET
 
 Application is configured by using web.xml, which registers
 [javax.ws.rs.core.Application](https://jax-rs-spec.java.net/nonav/2.0/apidocs/javax/ws/rs/core/Application.html)
-descendant to get classes and singletons from it (see class
-MyApplication).
+descendant to get classes and singletons from it (see class MyApplication).
 
 Running the Example
 -------------------
 
 Run the example as follows:
 
->     mvn clean package jetty:run
+>     mvn clean compile exec:java
 
-This deploys current example using Jetty web server. Once deployed, the
-application is ready to serve the following resources:
+This deploys the example using [Grizzly](http://grizzly.java.net/) container. You can access the application at:
 
--   <http://localhost:8080/helloworld-spring-webapp/jersey-hello>
--   <http://localhost:8080/helloworld-spring-webapp/spring-hello>
--   <http://localhost:8080/helloworld-spring-webapp/spring-singleton-hello>
+- <http://localhost:8080/base/helloworld>

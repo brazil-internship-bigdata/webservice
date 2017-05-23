@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2013 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -37,23 +37,22 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package org.glassfish.jersey.examples.helloworld.spring;
+package org.glassfish.jersey.examples.helloworld.webapp;
 
-import java.util.Date;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 
 /**
- * Simple date service that provides actual time and date info.
- *
- * @author Marko Asplund (marko.asplund at yahoo.com)
+ * @author Pavel Bucek (pavel.bucek at oracle.com)
  */
-public class DateTimeService {
+@Path("helloworld")
+public class HelloWorldResource {
 
-    /**
-     * Get current date and time.
-     *
-     * @return current date.
-     */
-    public Date getDateTime() {
-        return new Date();
+    @GET
+    @Produces("text/plain")
+    public String getHello() {
+        return "Hello World!";
     }
+
 }

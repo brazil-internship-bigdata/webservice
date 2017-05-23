@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2013 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012-2013 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -37,24 +37,39 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package org.glassfish.jersey.examples.helloworld.spring;
+package org.glassfish.jersey.examples.helloworld.webapp;
 
-import org.springframework.stereotype.Component;
+import java.net.URI;
+import javax.ws.rs.core.Application;
+import javax.ws.rs.core.UriBuilder;
 
-import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
-import javax.ws.rs.ext.Provider;
+import org.glassfish.jersey.test.JerseyTest;
+
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
- * Exception mapper to convert {@link IllegalArgumentException} into a textual response.
+ * Simple test to check "Hello World!" is being returned from the helloworld resource.
  *
- * @author Marko Asplund (marko.asplund at yahoo.com)
+ * @author Jakub Podlesak (jakub.podlesak at oracle.com)
  */
-@Provider
-public class CustomExceptionMapper implements ExceptionMapper<IllegalArgumentException> {
+public class HelloWorldTest extends JerseyTest {
 
     @Override
-    public Response toResponse(IllegalArgumentException exception) {
-        return Response.ok("Illegal Argument Exception Caught").build();
+    protected Application configure() {
+        return new MyApplication();
+    }
+
+    @Override
+    protected URI getBaseUri() {
+        return UriBuilder.fromUri(super.getBaseUri()).path("helloworld-webapp").build();
+    }
+
+    @Test
+    public void testClientStringResponse() {
+        String s = target().path(App.ROOT_PATH).request().get(String.class);
+        assertEquals("Hello World!", s);
     }
 }
+

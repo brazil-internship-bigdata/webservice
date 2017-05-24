@@ -53,8 +53,8 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 /**
  * @author Michal Gajdos
  */
-@Path("upload")
-public class MultiPartResource {
+@Path("download")
+public class DownloadResource {
 
 	@GET
     @Produces("text/plain")
@@ -62,49 +62,5 @@ public class MultiPartResource {
         return "Hello World! (GET)";
     }
 	
-	// Upload a csv on the server
-	@POST
-	@Path("csv")
-	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	public String postCSV(@FormDataParam("part") String data, @FormDataParam("part") FormDataContentDisposition d) {
-
-		if (storeFile("./csv/" + d.getFileName(), data))
-			return "CSV File saved";
-		else
-			return "Error during saving csv file";
-
-	}
 	
-	@POST
-	@Path("ktr")
-	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	public String postKTR(@FormDataParam("part") String data, @FormDataParam("part") FormDataContentDisposition d) {
-
-		if (storeFile("./csv/" + d.getFileName(), data))
-			return "KTR File saved";
-		else
-			return "Error during saving ktr file";
-
-	}
-
-	private boolean storeFile(String fileName, String data) {
-		try {
-			PrintWriter writer = new PrintWriter( fileName);
-			writer.println(data);
-			writer.close();
-		} catch (Exception e) {
-			return false;
-		}
-
-		return true;
-
-	}
-
-	/*@POST
-	@Path("xml-jaxb-part")
-	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	public String post(@FormDataParam("string") String s, @FormDataParam("string") FormDataContentDisposition sd,
-			@FormDataParam("bean") Bean b, @FormDataParam("bean") FormDataContentDisposition bd) {
-		return s + ":" + sd.getFileName() + "," + b.value + ":" + bd.getFileName();
-	}*/
 }

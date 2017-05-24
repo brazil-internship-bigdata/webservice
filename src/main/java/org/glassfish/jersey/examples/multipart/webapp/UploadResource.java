@@ -46,6 +46,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
@@ -68,7 +71,17 @@ public class UploadResource {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	public String postCSV(@FormDataParam("part") String data, @FormDataParam("part") FormDataContentDisposition d) {
 
-		if (storeFile("./csv/" + d.getFileName(), data))
+		// Add date at the name of the file
+		String filename = d.getFileName();
+		filename=filename.substring(0, filename.lastIndexOf('.'));
+		
+		Date date = new Date();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd_MMM_yyyy-HH-hh-mm",Locale.ENGLISH);
+		
+		filename+=dateFormat.format(date) + ".csv";
+		
+		
+		if (storeFile("./csv/" + filename, data))
 			return "CSV File saved";
 		else
 			return "Error during saving csv file";

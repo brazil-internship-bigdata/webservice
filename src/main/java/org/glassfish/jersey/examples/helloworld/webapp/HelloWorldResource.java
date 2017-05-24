@@ -44,9 +44,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-/**
- * @author Pavel Bucek (pavel.bucek at oracle.com)
- */
+
 @Path("helloworld")
 public class HelloWorldResource {
 

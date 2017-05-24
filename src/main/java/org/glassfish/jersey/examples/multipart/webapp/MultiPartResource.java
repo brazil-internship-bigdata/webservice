@@ -40,8 +40,10 @@
 package org.glassfish.jersey.examples.multipart.webapp;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.io.PrintWriter;
 
@@ -51,44 +53,46 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 /**
  * @author Michal Gajdos
  */
-@Path("/form")
+@Path("upload")
 public class MultiPartResource {
 
-    @POST
-    @Path("part")
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public String post(@FormDataParam("part") String s) {
-        return s;
+	@GET
+    @Produces("text/plain")
+    public String getHello() {
+        return "Hello World! (GET)";
     }
+	
+	// Upload a csv on the server
+	@POST
+	@Path("csv")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	public String post(@FormDataParam("part") String data, @FormDataParam("part") FormDataContentDisposition d) {
 
-    @POST
-    @Path("part-file-name")
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public String post(
-            @FormDataParam("part") String s,
-            @FormDataParam("part") FormDataContentDisposition d) {
+		if (storeFile(d.getFileName(), data))
+			return "File saved";
+		else
+			return "Error during saving";
 
-	try {
-		PrintWriter writer = new PrintWriter(d.getFileName());
-		writer.println(s);
-		writer.close();
-	} catch (Exception e){
-		e.printStackTrace();
 	}
 
-	
+	private boolean storeFile(String fileName, String data) {
+		try {
+			PrintWriter writer = new PrintWriter("./csv/" + fileName);
+			writer.println(data);
+			writer.close();
+		} catch (Exception e) {
+			return false;
+		}
 
-        return "Fichier enregistré" ;
-    }
+		return true;
 
-    @POST
-    @Path("xml-jaxb-part")
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public String post(
-            @FormDataParam("string") String s,
-            @FormDataParam("string") FormDataContentDisposition sd,
-            @FormDataParam("bean") Bean b,
-            @FormDataParam("bean") FormDataContentDisposition bd) {
-        return s + ":" + sd.getFileName() + "," + b.value + ":" + bd.getFileName();
-    }
+	}
+
+	/*@POST
+	@Path("xml-jaxb-part")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	public String post(@FormDataParam("string") String s, @FormDataParam("string") FormDataContentDisposition sd,
+			@FormDataParam("bean") Bean b, @FormDataParam("bean") FormDataContentDisposition bd) {
+		return s + ":" + sd.getFileName() + "," + b.value + ":" + bd.getFileName();
+	}*/
 }

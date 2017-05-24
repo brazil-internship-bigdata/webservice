@@ -66,18 +66,30 @@ public class MultiPartResource {
 	@POST
 	@Path("csv")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	public String post(@FormDataParam("part") String data, @FormDataParam("part") FormDataContentDisposition d) {
+	public String postCSV(@FormDataParam("part") String data, @FormDataParam("part") FormDataContentDisposition d) {
 
-		if (storeFile(d.getFileName(), data))
-			return "File saved";
+		if (storeFile("./csv/" + d.getFileName(), data))
+			return "CSV File saved";
 		else
-			return "Error during saving";
+			return "Error during saving csv file";
+
+	}
+	
+	@POST
+	@Path("ktr")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	public String postKTR(@FormDataParam("part") String data, @FormDataParam("part") FormDataContentDisposition d) {
+
+		if (storeFile("./csv/" + d.getFileName(), data))
+			return "KTR File saved";
+		else
+			return "Error during saving ktr file";
 
 	}
 
 	private boolean storeFile(String fileName, String data) {
 		try {
-			PrintWriter writer = new PrintWriter("./csv/" + fileName);
+			PrintWriter writer = new PrintWriter( fileName);
 			writer.println(data);
 			writer.close();
 		} catch (Exception e) {

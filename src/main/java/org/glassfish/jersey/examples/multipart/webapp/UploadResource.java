@@ -70,13 +70,18 @@ public class UploadResource {
 	@Path("csv")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	public String postCSV(@FormDataParam("part") String data, @FormDataParam("part") FormDataContentDisposition d) {
-
-		// Add date at the name of the file
+		
 		String filename = d.getFileName();
+		
+		if(!filename.substring(filename.lastIndexOf('.')).equalsIgnoreCase(".csv")){
+			return "Error, is not a CSV file";
+		}
+		
+		// Add date at the name of the file
 		filename=filename.substring(0, filename.lastIndexOf('.'));
 		
 		Date date = new Date();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd_MMM_yyyy-HH-hh-mm",Locale.ENGLISH);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd_MMM_yyyy-HH:mm:hh");
 		
 		filename+=dateFormat.format(date) + ".csv";
 		

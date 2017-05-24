@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2012 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -37,23 +37,58 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package org.glassfish.jersey.examples.helloworld.webapp;
+package org.glassfish.jersey.examples.multipart.webapp;
 
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
-import java.util.HashSet;
-import java.util.Set;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.core.MediaType;
+import java.io.PrintWriter;
+
+import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
 /**
- * @author Pavel Bucek (pavel.bucek at oracle.com)
+ * @author Michal Gajdos
  */
-@ApplicationPath("/")
-public class MyApplication extends Application {
-    @Override
-    public Set<Class<?>> getClasses() {
-        final Set<Class<?>> classes = new HashSet<Class<?>>();
-        // register root resource
-        classes.add(HelloWorldResource.class);
-        return classes;
+@Path("/form")
+public class MultiPartResource {
+
+    @POST
+    @Path("part")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public String post(@FormDataParam("part") String s) {
+        return s;
+    }
+
+    @POST
+    @Path("part-file-name")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public String post(
+            @FormDataParam("part") String s,
+            @FormDataParam("part") FormDataContentDisposition d) {
+
+	try {
+		PrintWriter writer = new PrintWriter(d.getFileName());
+		writer.println(s);
+		writer.close();
+	} catch (Exception e){
+		e.printStackTrace();
+	}
+
+	
+
+        return "Fichier enregistré" ;
+    }
+
+    @POST
+    @Path("xml-jaxb-part")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public String post(
+            @FormDataParam("string") String s,
+            @FormDataParam("string") FormDataContentDisposition sd,
+            @FormDataParam("bean") Bean b,
+            @FormDataParam("bean") FormDataContentDisposition bd) {
+        return s + ":" + sd.getFileName() + "," + b.value + ":" + bd.getFileName();
     }
 }

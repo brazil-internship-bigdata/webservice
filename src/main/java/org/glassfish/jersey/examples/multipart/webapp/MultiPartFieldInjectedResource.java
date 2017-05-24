@@ -37,27 +37,32 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package org.glassfish.jersey.examples.helloworld.webapp;
+package org.glassfish.jersey.examples.multipart.webapp;
 
-import javax.ws.rs.GET;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 
-@Path("helloworld")
-public class HelloWorldResource {
+/**
+ * Field-injected version of the {@link FormDataParam} injection testing resource.
+ *
+ * @author Marek Potociar (marek.potociar at oracle.com)
+ */
+@Path("/form-field-injected")
+public class MultiPartFieldInjectedResource {
+    @FormDataParam("string") private String s;
+    @FormDataParam("string") private FormDataContentDisposition sd;
+    @FormDataParam("bean") private Bean b;
+    @FormDataParam("bean") private FormDataContentDisposition bd;
 
-    @GET
-    @Produces("text/plain")
-    public String getHello() {
-        return "Hello World! (GET)";
-    }
-    
     @POST
-    @Produces("text/plain")
-    public String postHelloHello() {
-    	 return "Hello World! (POST)";
+    @Path("xml-jaxb-part")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public String post() {
+        return s + ":" + sd.getFileName() + "," + b.value + ":" + bd.getFileName();
     }
-
 }

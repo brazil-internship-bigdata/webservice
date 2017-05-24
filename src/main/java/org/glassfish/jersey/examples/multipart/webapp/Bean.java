@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2012-2013 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -37,39 +37,20 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package org.glassfish.jersey.examples.helloworld.webapp;
+package org.glassfish.jersey.examples.multipart.webapp;
 
-import java.net.URI;
-import javax.ws.rs.core.Application;
-import javax.ws.rs.core.UriBuilder;
+import javax.xml.bind.annotation.XmlRootElement;
 
-import org.glassfish.jersey.test.JerseyTest;
+@XmlRootElement
+public class Bean {
 
-import org.junit.Test;
+    public String value;
 
-import static org.junit.Assert.assertEquals;
-
-/**
- * Simple test to check "Hello World!" is being returned from the helloworld resource.
- *
- * @author Jakub Podlesak (jakub.podlesak at oracle.com)
- */
-public class HelloWorldTest extends JerseyTest {
-
-    @Override
-    protected Application configure() {
-        return new MyApplication();
+    public Bean() {
     }
 
-    @Override
-    protected URI getBaseUri() {
-        return UriBuilder.fromUri(super.getBaseUri()).path("helloworld-webapp").build();
+    public Bean(String str) {
+        value = str;
     }
 
-    /*@Test
-    public void testClientStringResponse() {
-        String s = target().path(App.ROOT_PATH).request().get(String.class);
-        assertEquals("Hello World!", s);
-    }*/
 }
-

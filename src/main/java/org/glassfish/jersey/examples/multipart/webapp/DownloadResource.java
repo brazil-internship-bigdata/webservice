@@ -45,6 +45,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import java.io.File;
 import java.io.PrintWriter;
 
 import org.glassfish.jersey.media.multipart.FormDataParam;
@@ -57,9 +60,30 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 public class DownloadResource {
 
 	@GET
-    @Produces("text/plain")
-    public String getHello() {
-        return "Hello World! (GET)";
+	@Produces("application/ktr")
+    public Response getHello() {
+		File fileToSend = new File("./csv/test.csv");
+		return Response.ok(fileToSend, "application/ktr").build();
+		
+		
+    }
+	
+	@POST
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces("application/ktr")
+    public Response postKTR(@FormDataParam("company") String companyName) {
+		
+		try {
+			File fileToSend = new File("./ktr/" +  companyName + ".ktr");
+			return Response.ok(fileToSend, "application/ktr").build();
+		} catch (Exception e) {
+			return Response.serverError().build();
+					
+					
+		}
+	
+		
+		
     }
 	
 	

@@ -1,9 +1,10 @@
-Helloworld webapp Example
+Webapp for participact 
 =========================
 
-This example demonstrates how to create simple Jersey application,
-package it into WAR file and how to run it using [Grizzly
-container](http://grizzly.java.net).
+This webapp is based on sample of Jersey application available at https://jersey.github.io/download.html. The sample used to be the base of this webapp is helloworld-webapp.
+
+The aim of this webapp is to provide ktr and store data in CSV on a server. 
+
 
 Contents
 --------
@@ -27,4 +28,5 @@ Run the example as follows:
 
 This deploys the example using [Grizzly](http://grizzly.java.net/) container. You can access the application at:
 
-- <http://localhost:8080/base/helloworld>
+- <http://localhost:8080/helloworld-webapp/helloworld>
+

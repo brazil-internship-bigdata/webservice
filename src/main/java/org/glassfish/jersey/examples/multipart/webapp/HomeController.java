@@ -39,22 +39,33 @@
  */
 package org.glassfish.jersey.examples.multipart.webapp;
 
-import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
-import org.glassfish.jersey.media.multipart.MultiPartFeature;
-import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.server.mvc.jsp.JspMvcFeature;
+import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.glassfish.jersey.server.mvc.Viewable;
+import org.glassfish.jersey.internal.util.collection.Views;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
 /**
  * @author Michal Gajdos
  */
-@ApplicationPath("/m")
-public class MyApplication extends ResourceConfig {
+@Path("")
+public class HomeController {
 
-    public MyApplication() {
-        super(UploadResource.class, DownloadResource.class, MultiPartFieldInjectedResource.class, MultiPartFeature.class, HelloWorldResource.class,HomeController.class);
-        register(JspMvcFeature.class);
-        //register(HomeController.class);
-        property(JspMvcFeature.TEMPLATE_BASE_PATH, "./webapp/WEB-INF/jsp");
+	@GET
+    @Produces("text/plain")
+    public Viewable getHello() {
+        return new Viewable("/index");
     }
+	
+	
 }

@@ -58,12 +58,21 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 /**
  * @author Michal Gajdos
  */
-@Path("")
+@Path("interface")
 public class HomeController {
 
 	@GET
+	@Path("/hello")
     @Produces("text/plain")
-    public Viewable getHello() {
+    public String getHello() {
+        return "Machin";
+    }
+	
+	@GET
+    @Produces("text/plain")
+    public Viewable getInterface() {
+		System.out.println(" ---------------- Interface ------------");
+		
         return new Viewable("/index");
     }
 	

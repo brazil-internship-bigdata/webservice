@@ -55,6 +55,6 @@ public class MyApplication extends ResourceConfig {
         super(UploadResource.class, DownloadResource.class, MultiPartFieldInjectedResource.class, MultiPartFeature.class, HelloWorldResource.class,HomeController.class);
         register(JspMvcFeature.class);
         //register(HomeController.class);
-        property(JspMvcFeature.TEMPLATE_BASE_PATH, "./webapp/WEB-INF/jsp");
+        property(JspMvcFeature.TEMPLATE_BASE_PATH, "../webapp/WEB-INF/jsp");
     }
 }

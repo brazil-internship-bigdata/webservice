@@ -69,7 +69,7 @@ public class UploadResource {
 	@POST
 	@Path("csv")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	public String postCSV(@FormDataParam("part") String data, @FormDataParam("part") FormDataContentDisposition d) {
+	public String postCSV(@FormDataParam("file") String data, @FormDataParam("file") FormDataContentDisposition d) {
 		
 		String filename = d.getFileName();
 		
@@ -86,7 +86,7 @@ public class UploadResource {
 		filename+=dateFormat.format(date) + ".csv";
 		
 		
-		if (storeFile("./csv/" + filename, data))
+		if (storeFile("./resource/csv/" + filename, data))
 			return "CSV File saved";
 		else
 			return "Error during saving csv file";
@@ -96,9 +96,9 @@ public class UploadResource {
 	@POST
 	@Path("ktr")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	public String postKTR(@FormDataParam("part") String data, @FormDataParam("part") FormDataContentDisposition d) {
+	public String postKTR(@FormDataParam("file") String data, @FormDataParam("file") FormDataContentDisposition d) {
 
-		if (storeFile("./ktr/" + d.getFileName(), data))
+		if (storeFile("./resource/ktr/" + d.getFileName(), data))
 			return "KTR File saved";
 		else
 			return "Error during saving ktr file";

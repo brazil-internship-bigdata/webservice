@@ -52,9 +52,9 @@ import org.glassfish.jersey.server.mvc.jsp.JspMvcFeature;
 public class MyApplication extends ResourceConfig {
 
     public MyApplication() {
-        super(UploadResource.class, DownloadResource.class, MultiPartFieldInjectedResource.class, MultiPartFeature.class, HelloWorldResource.class,HomeController.class);
+        super(UploadResource.class, DownloadResource.class, MultiPartFeature.class, HelloWorldResource.class);
         register(JspMvcFeature.class);
-        //register(HomeController.class);
-        property(JspMvcFeature.TEMPLATE_BASE_PATH, "WEB-INF/jsp/");
+       
+       
     }
 }

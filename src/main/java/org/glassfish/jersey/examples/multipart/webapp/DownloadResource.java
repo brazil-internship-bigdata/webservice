@@ -59,22 +59,16 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 @Path("download")
 public class DownloadResource {
 
-	@GET
-	@Produces("application/ktr")
-    public Response getHello() {
-		File fileToSend = new File("./csv/test.csv");
-		return Response.ok(fileToSend, "application/ktr").build();
-		
-		
-    }
+	
 	
 	@POST
+	@Path("ktr")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces("application/ktr")
     public Response postKTR(@FormDataParam("company") String companyName) {
 		
 		try {
-			File fileToSend = new File("./ktr/" +  companyName + ".ktr");
+			File fileToSend = new File("./resource/ktr/" +  companyName + ".ktr");
 			return Response.ok(fileToSend, "application/ktr").build();
 		} catch (Exception e) {
 			return Response.serverError().build();

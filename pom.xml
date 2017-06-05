@@ -51,6 +51,10 @@
         <version>2.26-b04</version>
     </parent>
 
+	<properties>
+	   <checkstyle.skip>true</checkstyle.skip>
+	</properties>
+
     <artifactId>multipart-webapp</artifactId>
     <name>jersey-examples-multipart-webapp</name>
     <packaging>war</packaging>

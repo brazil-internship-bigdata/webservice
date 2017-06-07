@@ -58,7 +58,7 @@
 
 	<servlet-mapping>
 		<servlet-name>org.glassfish.jersey.examples.multipart.resources.MyApplication</servlet-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/api/*</url-pattern>
 	</servlet-mapping>
 
 	

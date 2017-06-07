@@ -13,7 +13,8 @@ Running the Example
 
 Run the example as follows:
 
->     mvn clean compile exec:java
+>     mvn clean package jetty:run
+
 
 
 Contents
@@ -21,19 +22,19 @@ Contents
 
 The base of the URI is :
 
-[http://localhost:8080/multipart-webapp/](http://localhost:8080/multipart-webapp/)
+[http://localhost:8080/multipart-webapp/]( /)
 
 The mapping of the URI path space is presented in the following table:
 
-URI path                     | Resource class                                 | HTTP methods
----------------------------- | ---------------------------------------------- | --------------
-**_/                         | HTML page                                      | GET
-**_/helloworld_**            | HelloWorldResource                             | GET
-**_/helloworld_**   	     | HelloWorldResource                             | POST
-**_/upload/csv_**            | UploadResource                                 | POST, set the file in the parameter 'file' in the body of the request                                 
-**_/upload/ktr_**            | UploadResource                                 |POST, set the file in the parameter 'file' in the body of the request 
+URI path                         | Resource class                                 | HTTP methods
+-------------------------------- | ---------------------------------------------- | --------------
+**_/index.jsp_**                   | HTML page                                      | GET
+**_/api/helloworld_**            | HelloWorldResource                             | GET
+**_/api/helloworld_**   	     | HelloWorldResource                             | POST
+**_/api/upload/csv_**            | UploadResource                                 | POST, set the file in the parameter 'file' in the body of the request                                 
+**_/api/upload/ktr_**            | UploadResource                                 |POST, set the file in the parameter 'file' in the body of the request 
 **
-**_/download/ktr_**          | Download Resource                              |POST, set the file in the parameter 'file' in the body of the request 
+**_/api/download/ktr_**          | Download Resource                              |POST, set the file in the parameter 'file' in the body of the request 
 **
 
 Application is configured by using web.xml, which registers

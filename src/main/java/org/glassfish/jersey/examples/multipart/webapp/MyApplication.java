@@ -48,7 +48,7 @@ import org.glassfish.jersey.server.mvc.jsp.JspMvcFeature;
 /**
  * @author Michal Gajdos
  */
-@ApplicationPath("/")
+@ApplicationPath("api")
 public class MyApplication extends ResourceConfig {
 
 	public MyApplication() {

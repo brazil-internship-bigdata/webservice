@@ -13,7 +13,8 @@ Running the Example
 
 Run the example as follows:
 
->     mvn clean compile exec:java
+>     mvn clean package jetty:run
+
 
 
 Contents
@@ -21,7 +22,7 @@ Contents
 
 The base of the URI is :
 
-[http://localhost:8080/multipart-webapp/](http://localhost:8080/multipart-webapp/)
+[http://localhost:8080/multipart-webapp/]( /)
 
 The mapping of the URI path space is presented in the following table:
 

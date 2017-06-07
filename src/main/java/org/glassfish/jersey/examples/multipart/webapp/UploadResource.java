@@ -48,8 +48,6 @@ import javax.ws.rs.core.MediaType;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
-
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
@@ -60,54 +58,50 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 public class UploadResource {
 
 	@GET
-    @Produces("text/plain")
-    public String getHello() {
-        return "Hello World! (GET)";
-    }
-	
+	@Produces("text/plain")
+	public String getHello() {
+		return "Hello World! (GET)";
+	}
+
 	// Upload a csv on the server
 	@POST
 	@Path("csv")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	public String postCSV(@FormDataParam("file") String data, @FormDataParam("file") FormDataContentDisposition d) {
-		
+
 		String filename = d.getFileName();
-		
-		if(!filename.substring(filename.lastIndexOf('.')).equalsIgnoreCase(".csv")){
+
+		if (!filename.substring(filename.lastIndexOf('.')).equalsIgnoreCase(".csv")) {
 			return "Error, is not a CSV file";
 		}
-		
+
 		// Add date at the name of the file
-		filename=filename.substring(0, filename.lastIndexOf('.'));
-		
+		filename = filename.substring(0, filename.lastIndexOf('.'));
+
 		Date date = new Date();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd_MMM_yyyy-HH:mm:hh");
-		
-		filename+=dateFormat.format(date) + ".csv";
-		
-		
+
+		filename += dateFormat.format(date) + ".csv";
+
 		if (storeFile("./resource/csv/" + filename, data))
 			return "CSV File saved";
 		else
 			return "Error during saving csv file";
-
 	}
-	
+
 	@POST
 	@Path("ktr")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	public String postKTR(@FormDataParam("file") String data, @FormDataParam("file") FormDataContentDisposition d) {
-
 		if (storeFile("./resource/ktr/" + d.getFileName(), data))
 			return "KTR File saved";
 		else
 			return "Error during saving ktr file";
-
 	}
 
 	private boolean storeFile(String fileName, String data) {
 		try {
-			PrintWriter writer = new PrintWriter( fileName);
+			PrintWriter writer = new PrintWriter(fileName);
 			writer.println(data);
 			writer.close();
 		} catch (Exception e) {
@@ -115,14 +109,5 @@ public class UploadResource {
 		}
 
 		return true;
-
 	}
-
-	/*@POST
-	@Path("xml-jaxb-part")
-	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	public String post(@FormDataParam("string") String s, @FormDataParam("string") FormDataContentDisposition sd,
-			@FormDataParam("bean") Bean b, @FormDataParam("bean") FormDataContentDisposition bd) {
-		return s + ":" + sd.getFileName() + "," + b.value + ":" + bd.getFileName();
-	}*/
 }

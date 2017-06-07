@@ -51,10 +51,8 @@ import org.glassfish.jersey.server.mvc.jsp.JspMvcFeature;
 @ApplicationPath("/")
 public class MyApplication extends ResourceConfig {
 
-    public MyApplication() {
-        super(UploadResource.class, DownloadResource.class, MultiPartFeature.class, HelloWorldResource.class);
-        register(JspMvcFeature.class);
-       
-       
-    }
+	public MyApplication() {
+		super(UploadResource.class, DownloadResource.class, MultiPartFeature.class, HelloWorldResource.class);
+		register(JspMvcFeature.class);
+	}
 }

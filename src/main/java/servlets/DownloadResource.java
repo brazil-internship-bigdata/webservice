@@ -37,22 +37,34 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package org.glassfish.jersey.examples.multipart.webapp;
+package servlets;
 
-import javax.ws.rs.ApplicationPath;
-
-import org.glassfish.jersey.media.multipart.MultiPartFeature;
-import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.server.mvc.jsp.JspMvcFeature;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.io.File;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 
 /**
  * @author Michal Gajdos
  */
-@ApplicationPath("api")
-public class MyApplication extends ResourceConfig {
+@Path("download")
+public class DownloadResource {
 
-	public MyApplication() {
-		super(UploadResource.class, DownloadResource.class, MultiPartFeature.class, HelloWorldResource.class);
-		register(JspMvcFeature.class);
+	@POST
+	@Path("ktr")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces("application/s")
+	public Response postKTR(@FormDataParam("company") String companyName) {
+
+		try {
+			File fileToSend = new File("./resource/ktr/" + companyName + ".ktr");
+			return Response.ok(fileToSend, "application/ktr").build();
+		} catch (Exception e) {
+			return Response.serverError().build();
+		}
 	}
 }

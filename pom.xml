@@ -44,6 +44,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
+	<!-- TODO  -->
     <parent>
         <groupId>org.glassfish.jersey.examples</groupId>
         <artifactId>webapp-example-parent</artifactId>
@@ -53,13 +54,14 @@
 
 	<properties>
 	   <checkstyle.skip>true</checkstyle.skip>
+	   <skipTests>true</skipTests>
 	</properties>
 
-    <artifactId>multipart-webapp</artifactId>
-    <name>jersey-examples-multipart-webapp</name>
+    <artifactId>participact-webapp</artifactId>
+    <name>participact-webapp</name>
     <packaging>war</packaging>
 
-    <description>Jersey Multipart example.</description>
+    <description>Participact-webapp</description>
 
     <dependencies>
         <dependency>

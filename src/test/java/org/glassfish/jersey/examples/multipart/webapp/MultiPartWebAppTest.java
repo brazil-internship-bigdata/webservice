@@ -46,6 +46,8 @@ import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.test.JerseyTest;
 
+import servlets.APIApplication;
+
 /**
  * Tests for {@code MultipartResource} class.
  *
@@ -61,7 +63,7 @@ public class MultiPartWebAppTest extends JerseyTest {
 
 	@Override
 	protected Application configure() {
-		return new MyApplication();
+		return new APIApplication();
 	}
 
 	@Override

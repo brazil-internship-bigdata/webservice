@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2012-2015 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -37,34 +37,26 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package org.glassfish.jersey.examples.multipart.webapp;
+package servlets;
 
-import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.io.File;
-import org.glassfish.jersey.media.multipart.FormDataParam;
 
-/**
- * @author Michal Gajdos
- */
-@Path("download")
-public class DownloadResource {
+@Path("helloworld")
+public class HelloWorldResource {
+
+	@GET
+	@Produces("text/plain")
+	public String getHello() {
+		return "Hello World! (GET)";
+	}
 
 	@POST
-	@Path("ktr")
-	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	@Produces("application/ktr")
-	public Response postKTR(@FormDataParam("company") String companyName) {
-
-		try {
-			File fileToSend = new File("./resource/ktr/" + companyName + ".ktr");
-			return Response.ok(fileToSend, "application/ktr").build();
-		} catch (Exception e) {
-			return Response.serverError().build();
-		}
+	@Produces("text/plain")
+	public String postHelloHello() {
+		return "Hello World! (POST)";
 	}
+
 }

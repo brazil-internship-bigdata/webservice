@@ -34,9 +34,8 @@ URI path                         | Resource class                               
 **_/api/helloworld_**   	     | HelloWorldResource                             | POST
 **_/api/upload/csv_**            | UploadResource                                 | POST, set the file in the parameter 'file' in the body of the request                                 
 **_/api/upload/ktr_**            | UploadResource                                 |POST, set the file in the parameter 'file' in the body of the request 
-**
 **_/api/download/ktr_**          | Download Resource                              |POST, set the file in the parameter 'file' in the body of the request 
-**
+
 
 Application is configured by using web.xml, which registers
 [javax.ws.rs.core.Application](https://jax-rs-spec.java.net/nonav/2.0/apidocs/javax/ws/rs/core/Application.html)

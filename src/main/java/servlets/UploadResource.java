@@ -79,11 +79,11 @@ public class UploadResource {
 		filename = filename.substring(0, filename.lastIndexOf('.'));
 
 		Date date = new Date();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd_MMM_yyyy-HH:mm:hh");
+		SimpleDateFormat dateFormat = new SimpleDateFormat(APIApplication.DATE_FORMAT);
 
 		filename += dateFormat.format(date) + ".csv";
 
-		if (storeFile("./resource/csv/" + filename, data))
+		if (storeFile(APIApplication.CSV_FILE_PATH + filename, data))
 			return "CSV File saved";
 		else
 			return "Error during saving csv file";
@@ -93,7 +93,7 @@ public class UploadResource {
 	@Path("ktr")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	public String postKTR(@FormDataParam("file") String data, @FormDataParam("file") FormDataContentDisposition d) {
-		if (storeFile("./resource/ktr/" + d.getFileName(), data))
+		if (storeFile(APIApplication.KTR_FILE_PATH + d.getFileName(), data))
 			return "KTR File saved";
 		else
 			return "Error during saving ktr file";

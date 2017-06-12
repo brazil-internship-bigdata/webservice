@@ -61,7 +61,7 @@ public class DownloadResource {
 	public Response postKTR(@FormDataParam("company") String companyName) {
 
 		try {
-			File fileToSend = new File("./resource/ktr/" + companyName + ".ktr");
+			File fileToSend = new File(APIApplication.KTR_FILE_PATH + companyName + ".ktr");
 			return Response.ok(fileToSend, "application/ktr").build();
 		} catch (Exception e) {
 			return Response.serverError().build();

@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2012 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012-2015 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -37,26 +37,26 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package org.glassfish.jersey.examples.multipart.webapp;
+package servlets;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.ApplicationPath;
 
-@Path("helloworld")
-public class HelloWorldResource {
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.server.mvc.jsp.JspMvcFeature;
 
-	@GET
-	@Produces("text/plain")
-	public String getHello() {
-		return "Hello World! (GET)";
+/**
+ * @author Michal Gajdos
+ */
+@ApplicationPath("api")
+public class APIApplication extends ResourceConfig {
+	
+	public static final String KTR_FILE_PATH = "./resource/ktr/";
+	public static final String CSV_FILE_PATH = "./resource/csv/";
+	public static final String DATE_FORMAT = "dd_MMM_yyyy-HH:mm:hh";
+	
+	public APIApplication() {
+		super(UploadResource.class, DownloadResource.class, MultiPartFeature.class, HelloWorldResource.class);
+		register(JspMvcFeature.class);
 	}
-
-	@POST
-	@Produces("text/plain")
-	public String postHelloHello() {
-		return "Hello World! (POST)";
-	}
-
 }

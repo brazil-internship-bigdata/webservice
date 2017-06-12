@@ -5,18 +5,18 @@
         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
 	<servlet>
-		<servlet-name>org.glassfish.jersey.examples.multipart.resources.MyApplication</servlet-name>
+		<servlet-name>API</servlet-name>
 		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
 		<init-param>
 		    <param-name>javax.ws.rs.Application</param-name>
-		    <param-value>org.glassfish.jersey.examples.multipart.webapp.MyApplication</param-value>
+		    <param-value>servlets.APIApplication</param-value>
 		</init-param>
 		
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>org.glassfish.jersey.examples.multipart.resources.MyApplication</servlet-name>
+		<servlet-name>API</servlet-name>
 		<url-pattern>/api/*</url-pattern>
 	</servlet-mapping>
 
